@@ -12,6 +12,14 @@ module.exports = {
             .catch(err => res.json({ 'message': 'Can not fetched data' }))
 
     },
+    detail: (req, res) => {
+        const id = req.params.id
+        ad_housekeeping.findOne({
+                where: { ad_housekeeping_id: id }
+            })
+            .then(user => res.json({ 'message': 'Fetched user', 'data': user }))
+            .catch(err => res.json({ 'message': ' Cannot fetch user ' }))
+    },
     store: (req, res) => {
         const { ad_client_id, ad_org_id, ad_table_id, backupfolder, created, description, help, isactive, name, isexportxmlbackup, issaveinhistoric } = req.body;
         return ad_housekeeping.create({
@@ -38,7 +46,7 @@ module.exports = {
             }))
     },
     update: (req, res) => {
-        const { ad_housekeeping_id, ad_client_id, ad_org_id, ad_table_id, backupfolder, created, description, help, isactive, name, isexportxmlbackup, issaveinhistoric } = req.body;
+        const { ad_client_id, ad_org_id, ad_table_id, backupfolder, created, description, help, isactive, name, isexportxmlbackup, issaveinhistoric } = req.body;
         return ad_housekeeping.update({
                 ad_client_id: ad_client_id,
                 ad_org_id: ad_org_id,
@@ -52,13 +60,13 @@ module.exports = {
                 isexportxmlbackup: isexportxmlbackup,
                 issaveinhistoric: issaveinhistoric
             }, {
-                where: { ad_housekeeping_id: ad_housekeeping_id }
+                where: { ad_housekeeping_id: req.params.id }
             })
             .then(row => res.json({ message: 'Successfull', 'row': row[0] }))
             .catch(err => res.json({ message: 'Cannot to update book', err }))
     },
     destroy: (req, res) => {
-        const { id } = req.body;
+        const { id } = req.params.id;
         return ad_housekeeping.destroy({
                 where: { ad_housekeeping_id: id }
             })

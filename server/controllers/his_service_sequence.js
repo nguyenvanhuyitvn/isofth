@@ -11,6 +11,14 @@ module.exports = {
             }))
             .catch(err => res.json({ message: 'Cannot to fetch data', err }))
     },
+    detail: (req, res) => {
+        const id = req.params.id
+        his_service_sequence.findOne({
+                where: { his_service_sequence_id: id }
+            })
+            .then(services => res.json({ 'message': 'Fetched services', 'data': services }))
+            .catch(err => res.json({ 'message': ' Cannot fetch user ' }))
+    },
     store: (req, res) => {
         const { ad_client_id, ad_org_id, createdby, updatedby, his_service_sequence_uu, isactive, name, isdeleted, value } = req.body;
         return his_service_sequence.create({
@@ -35,7 +43,7 @@ module.exports = {
             }))
     },
     update: (req, res) => {
-        const { id, ad_client_id, ad_org_id, createdby, updatedby, his_service_sequence_uu, isactive, name, isdeleted, value } = req.body;
+        const { ad_client_id, ad_org_id, createdby, updatedby, his_service_sequence_uu, isactive, name, isdeleted, value } = req.body;
         return his_service_sequence.update({
                 ad_client_id: ad_client_id,
                 ad_org_id: ad_org_id,
@@ -47,13 +55,13 @@ module.exports = {
                 isdeleted: isdeleted,
                 value: value
             }, {
-                where: { his_service_sequence_id: id }
+                where: { his_service_sequence_id: req.params.id }
             })
             .then(row => res.json({ message: 'Successfull', 'row': row[0] }))
             .catch(err => res.json({ message: 'Cannot to update book', err }))
     },
     destroy: (req, res) => {
-        const { id } = req.body;
+        const { id } = req.params.id;
         return his_service_sequence.destroy({
                 where: { his_service_sequence_id: id }
             })
