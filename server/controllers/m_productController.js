@@ -160,7 +160,7 @@ module.exports = {
                 m_products
             }))
             .catch(err => res.json({
-                message: 'Can not create',
+                message: 'Can not create Product',
                 err
             }))
     },
