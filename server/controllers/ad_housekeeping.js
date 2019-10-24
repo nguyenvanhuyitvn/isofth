@@ -68,7 +68,7 @@ module.exports = {
     destroy: (req, res) => {
         const { id } = req.params.id;
         return ad_housekeeping.destroy({
-                where: { ad_housekeeping_id: id }
+                where: { ad_housekeeping_id: req.params.id }
             })
             .then(row => res.json({ message: 'Deleted', 'row': row }))
             .catch(err => res.json({ message: 'Cannot to delete book' }))

@@ -13,6 +13,7 @@ app.use(logger('dev')); // log requests to the console
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 routes(app);
+require('./server/config/config.js');
 app.get('*', (req, res) => res.status(200).send({
     message: 'Welcome to the default API route',
 }));

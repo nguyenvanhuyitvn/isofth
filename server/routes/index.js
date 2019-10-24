@@ -2,6 +2,7 @@
 
 import Housekeeping from '../controllers/ad_housekeeping';
 import ServiceSequences from '../controllers/his_service_sequence';
+import M_Product from '../controllers/m_productController';
 module.exports = function(app) {
 
     // Housekeeping API
@@ -21,4 +22,12 @@ module.exports = function(app) {
         .get(ServiceSequences.detail)
         .put(ServiceSequences.update)
         .delete(ServiceSequences.destroy)
+        // m_product API
+    app.route('/api/m_product')
+        .get(M_Product.show)
+        .post(M_Product.store)
+    app.route('/api/m_product/:id')
+        .get(M_Product.detail)
+        .put(M_Product.update)
+        .delete(M_Product.destroy)
 }
