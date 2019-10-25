@@ -309,7 +309,6 @@ module.exports = {
             .catch(err => res.json({ message: 'Cannot to update book', err }))
     },
     destroy: (req, res) => {
-        const { id } = req.params.id;
         return m_product.destroy({
                 where: { m_product_id: req.params.id }
             })
