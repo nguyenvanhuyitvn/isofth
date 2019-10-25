@@ -1,10 +1,13 @@
 'use strict';
 const withDateNoTz = require('sequelize-date-no-tz-postgres');
-
 module.exports = {
     up: (queryInterface, SequelizeBase) => {
+        
         const Sequelize = withDateNoTz(SequelizeBase);
-        return queryInterface.createTable('m_products', {
+        return queryInterface.createTable({
+            tableName: 'm_products',
+            schema: 'adempiere'
+        }, {
             m_product_id: {
                 allowNull: false,
                 autoIncrement: true,
@@ -210,25 +213,30 @@ module.exports = {
                 allowNull: false,
                 name: 'created',
                 field: 'created',
-                type: Sequelize.DATE_NO_TZ
+                type: Sequelize.DATE
             },
             updatedAt: {
                 allowNull: false,
                 name: 'updated',
                 field: 'updated',
-                type: Sequelize.DATE_NO_TZ
+                type: Sequelize.DATE
             },
             discontinuedby: {
-                allowNull: false,
-                type: Sequelize.DATE_NO_TZ
+                allowNull: true,
+                type: Sequelize.STRING
             },
-            discontinuedat: {
-                allowNull: false,
-                type: Sequelize.DATE_NO_TZ
-            }
+            deletedAt: {
+                allowNull: true,
+                name: 'discontinuedat',
+                field: 'discontinuedat',
+                type: 'TIMESTAMP'
+            },
         });
     },
     down: (queryInterface, Sequelize) => {
-        return queryInterface.dropTable('m_products');
+        return queryInterface.dropTable({
+            tableName: 'm_product',
+            schema: 'adempiere'
+        });
     }
 };

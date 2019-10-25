@@ -7,7 +7,7 @@ const hostname = '127.0.0.1';
 const port = 3200;
 const app = express();
 const server = http.createServer(app);
-
+// CREATE SCHEMA public;
 app.use(logger('dev')); // log requests to the console
 // Parser incoming requests data
 app.use(bodyParser.json());

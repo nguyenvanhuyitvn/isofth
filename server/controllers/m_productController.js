@@ -2,8 +2,8 @@ import model from '../models';
 const { m_product } = model;
 
 module.exports = {
-    show: (req, res) => {
-        return m_product.findAll()
+    show: async (req, res) => {
+        return await m_product.findAll()
             .then(m_products => res.status(200).send({
                 success: true,
                 message: 'Product List',
@@ -85,7 +85,9 @@ module.exports = {
             iskanban,
             ismanufactured,
             isphantom,
-            isownbox
+            isownbox,
+            discontinuedby,
+            discontinuedat
         } = req.body;
         return m_product.create({
                 ad_client_id,
@@ -152,7 +154,9 @@ module.exports = {
                 iskanban,
                 ismanufactured,
                 isphantom,
-                isownbox
+                isownbox,
+                discontinuedby,
+                discontinuedat
             })
             .then(m_products => res.status(200).send({
                 success: true,

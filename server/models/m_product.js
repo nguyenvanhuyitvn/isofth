@@ -2,6 +2,9 @@
 const withDateNoTz = require('sequelize-date-no-tz-postgres');
 module.exports = (sequelize, SequelizeDataTypes) => {
     const DataTypes = withDateNoTz(SequelizeDataTypes);
+    sequelize.query(`
+    SET SCHEMA 'adempiere'
+`);
     const m_product = sequelize.define('m_product', {
         m_product_id: {
             autoIncrement: true,
@@ -75,21 +78,36 @@ module.exports = (sequelize, SequelizeDataTypes) => {
         isownbox: DataTypes.STRING,
         createdAt: {
             field: 'created',
-            type: DataTypes.DATE_NO_TZ
+            name: 'created',
+            type: DataTypes.DATE
         },
         updatedAt: {
             field: 'updated',
-            type: DataTypes.DATE_NO_TZ
+            name: 'updated',
+            type: DataTypes.DATE
         },
         discontinuedby: {
-            type: DataTypes.DATE_NO_TZ
+            type: DataTypes.STRING,
+            allowNull: {
+                args: true
+            }
         },
-        discontinuedat: {
-            type: DataTypes.DATE_NO_TZ,
+        deletedAt: {
+            type: 'TIMESTAMP',
+            name: 'discontinuedat',
+            field: 'discontinuedat',
+            allowNull: {
+                args: true
+            }
         },
-    }, { timestamp: true });
+    }, { 
+        timestamp: true,
+        schema: 'adempiere',
+
+    });
     m_product.associate = function(models) {
         // associations can be defined here
     };
+    m_product.schema("adempiere");
     return m_product;
 };
